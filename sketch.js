@@ -1,65 +1,53 @@
-//color rects
-var value1 = 0;
-var value2 = 255;
-//var Player
-var x1 = 0;
-var y1 = 0;
-var x2 = 50;
-var y2 = 50;
-// Player movement
-var speed = 3;
-//var 2nd rect
-var value_x1 = 150;
-var value_y1 = 150;
-var value_x2 = 150;
-var value_y2 = 150;
+let snake;
+let rez = 10;
+let food;
+let w;
+let h;
 
 function setup() {
   createCanvas(400, 400);
+  //Calculates the closest int value
+  w = floor(width/rez);
+  h = floor(height/rez);
+  frameRate(5)
+  snake = new Snake();
+  foodLocation();
+}
+function foodLocation(){
+  let x = floor(random(w));
+  let y = floor(random(h));
+  food = createVector(x,y);
 }
 
 function draw() {
+  scale(rez);
   background(220);
-  //Movement Player
-  fill(value1);
-  rect(x1, y1, x2, y2);
-  Player();
-  //Drawing Rect for collision
-  fill(value2);
-  rect(value_x1,value_y1,value_x2,value_y2);
-  Collision();
-  
+  snake.update();
+  snake.show();
+
+  noStroke();
+  fill(255,0,0);
+  rect(food.x, food.y,1,1);
+
 }
 
-function Player(){
+function keyPressed(){
   //Check for User-Input
-  if(keyCode === DOWN_ARROW && keyIsPressed){
-    y1 = y1 + speed;
-  }
-  if(keyCode === UP_ARROW && keyIsPressed){
-    y1 = y1 - speed;
-  }
-  if(keyCode === LEFT_ARROW && keyIsPressed){
-    x1 = x1 - speed;
-  }
-  if(keyCode === RIGHT_ARROW && keyIsPressed){
-    x1 = x1 + speed;
-  }   
-  
-  if(x1 < 0){
-    x1 = 0;
-  }
-  if(x1 > 350){
-    x1 = 350;
-  }
-  if(y1 < 0){
-    y1 = 0;
-  }
-  if(y1 > 350){
-    y1 = 350;
-  }
-}
 
+  if(keyCode === DOWN_ARROW){
+    snake.setDir(0, 1);
+  }
+  if(keyCode === UP_ARROW){
+    snake.setDir(0, -1);
+  }
+  if(keyCode === LEFT_ARROW){
+    snake.setDir(-1, 0);
+  }
+  if(keyCode === RIGHT_ARROW){
+    snake.setDir(1, 0);
+  }   
+}
+/*
 function Collision(){
   //Checks if Player is has no collision
   let PlayerLeft = (x1 + x2) < value_x1;
@@ -76,3 +64,4 @@ function Collision(){
     value2 = 255;
   }
 }
+*/

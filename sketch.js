@@ -22,13 +22,20 @@ function foodLocation(){
 function draw() {
   scale(rez);
   background(220);
+  if(snake.eat(food)){
+   foodLocation();
+  }
   snake.update();
   snake.show();
 
+    if (snake.endGame()){
+        print("END GAME");
+        background(255,0,0);
+        noLoop();
+    }
   noStroke();
   fill(255,0,0);
   rect(food.x, food.y,1,1);
-
 }
 
 function keyPressed(){
@@ -45,23 +52,7 @@ function keyPressed(){
   }
   if(keyCode === RIGHT_ARROW){
     snake.setDir(1, 0);
-  }   
-}
-/*
-function Collision(){
-  //Checks if Player is has no collision
-  let PlayerLeft = (x1 + x2) < value_x1;
-  let PlayerRight = x1 > (value_x1 + value_x2);
-  let PlayerUnder = (y1 + y2) < value_y1;
-  let PlayerAbove = y1 > (value_y1 + value_y2);
-
-  //Checks if Player has collision
-  if(!(PlayerLeft||PlayerRight||PlayerUnder||PlayerAbove)){
-    print("Collision Detected!")
-    value2 = 150;
   }
-  else{
-    value2 = 255;
-  }
+  if(key == " ")
+  snake.grow();
 }
-*/
